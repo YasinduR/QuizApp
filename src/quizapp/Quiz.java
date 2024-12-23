@@ -52,6 +52,7 @@ public class Quiz {
     		
     	}
     	}
+    	
     	scanner.close();
         timer.cancel();
     	displayScore();

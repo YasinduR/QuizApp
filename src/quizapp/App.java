@@ -6,6 +6,32 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
         System.out.println("WELCOME TO THE QUIZ APP");
+
+        
+        // Initialize the Quiz 
+        Quiz quiz = new Quiz();
+        
+        List<Question> tfquestions = Database.getRandomTrueFalseQuestions(5); //load true false questions from database
+        List<Question> mcquestions = Database.getRandomMultipleChoiceQuestions(3); //load multiple choice questions from database
+        List<Question> openquestions = Database.getRandomOpenEndedQuestions(2); //load open ended questions from database
+        
+        for (Question q : tfquestions) {
+        	 quiz.addQuestion(q);
+        }	
+        
+        for (Question q : mcquestions) {
+       	 quiz.addQuestion(q);
+       }
+        
+        for (Question q : openquestions) {
+          	 quiz.addQuestion(q);
+          }
+
+        // Start the quiz
+        quiz.start(60);
+        
+        
+        //--------
         // Sample tf questions
         TrueFalseQuestion q1 = new TrueFalseQuestion("The Earth is flat.",2); // 1 true 2 false
         TrueFalseQuestion q2 = new TrueFalseQuestion("Water boils at 100 degrees Celsius at sea level.",1);
@@ -37,9 +63,6 @@ public class App {
             "carbon dioxide"
         );
         
-        // Initialize the Quiz 
-        Quiz quiz = new Quiz();
-        
         // Add questions
         //quiz.addQuestion(q1);
         //quiz.addQuestion(q2);
@@ -47,11 +70,7 @@ public class App {
         //quiz.addQuestion(q4);
         //quiz.addQuestion(q5);
         //quiz.addQuestion(q6);
-        quiz.addQuestion(q7);
+        //quiz.addQuestion(q7);
 
-        // Start the quiz
-        quiz.start(20);
-        
-        
     }
 }
