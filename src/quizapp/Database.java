@@ -22,14 +22,8 @@ public class Database {
             while (resultSet.next()) {
                 String questionText = resultSet.getString("question_text");
                 boolean correctAnswer = resultSet.getBoolean("correct_answer"); 
-                int correctAnswer_ ;
-                if(correctAnswer) {
-                	correctAnswer_ = 1; // 1 True
-                } else {
-                	correctAnswer_ =2; // 2 False
-                }
                 // Create a TrueFalseQuestion object and add it to the list
-                questions.add(new TrueFalseQuestion(questionText, correctAnswer_));
+                questions.add(new TrueFalseQuestion(questionText, correctAnswer));
             }
 
         } catch (SQLException e) {
@@ -79,7 +73,6 @@ public class Database {
             statement.setInt(1, numQuestions);
             // Execute the query and get the result set
             ResultSet resultSet = statement.executeQuery();
-            // Process the result set
             // Process the result set
             while (resultSet.next()) {
                 String questionText = resultSet.getString("question_text");

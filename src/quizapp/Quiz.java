@@ -10,13 +10,81 @@ public class Quiz {
     private List<Question> questions = new ArrayList<>();
     private int score = 0;
     private boolean timeUp = false;
+    private int elapsedTimeInSeconds = 0; // Custom timer in seconds
+    private Timer timer; // Timer to track elapsed time
+
+    public Quiz(int numOfTf,int numOfSelect,int numOfOpen) {
+        // Load questions from the database
+    	loadQuestions(numOfTf, numOfSelect, numOfOpen);
+        startTimer(); // Start the timer when the quiz is initialized
+    }
+
+    // Method to load questions
+    private void loadQuestions(int numOfTf, int numOfSelect, int numOfOpen) {
+        questions.addAll(Database.getRandomTrueFalseQuestions(numOfTf));
+        questions.addAll(Database.getRandomMultipleChoiceQuestions(numOfSelect));
+        questions.addAll(Database.getRandomOpenEndedQuestions(numOfOpen));
+    }
     
 
-    public void addQuestion(Question question) {
+
+    // Method to get a question by index
+    public Question getQuestion(int index) {
+        return questions.get(index);
+    }
+
+    // Method to get the number of questions
+    public int getNumberOfQuestions() {
+        return questions.size();
+    }
+
+    // Get the elapsed time in seconds
+    public int getElapsedTimeInSeconds() {
+        return elapsedTimeInSeconds;
+    }
+
+    // Method to check if time is up
+    public boolean isTimeUp(int timeLimitInSeconds) {
+        return elapsedTimeInSeconds >= timeLimitInSeconds;
+    }
+
+    // Start the timer
+    private void startTimer() {
+        timer = new Timer(true); // Daemon thread
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                elapsedTimeInSeconds++;
+            }
+        }, 0, 1000); // Increment every second
+    }
+
+    // Stop the timer
+    public void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    // Method to increment the score
+    public void incrementScore() {
+        score++;
+    }
+
+    // Get the score
+    public int getScore() {
+        return score;
+    }
+    
+    
+    // abonded 
+    
+    // Method to add a question to the quiz
+    public void addQuestion(Question question) { 
         questions.add(question);
     }
     
-    public void start(int timeLimit) { // Time limit in seconds
+    public void start_(int timeLimit) { // Time limit in seconds  // Not using currently
     	Scanner scanner = new Scanner(System.in);
     	
         // Set up a timer to end the quiz after the given time limit
